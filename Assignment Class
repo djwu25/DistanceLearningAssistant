@@ -1,0 +1,31 @@
+package distance.learning.assistant;
+import java.time.Month;
+
+public class Appointment {
+    
+    private String name, minutes;
+    private Month month;
+    private int day, hour;
+    
+    public Appointment() {
+        name = "";
+        month = Month.JANUARY;
+        day = 0;
+        hour = 0;
+        minutes = "";
+    }
+    
+    public void setName(String n) { name = n; }
+    public void setMonth(Month m) { month = m; }
+    public void setDay(int d) { day = d; }
+    public void setHour(int h) { hour = h; }
+    public void setMinutes(String m) { minutes = m; }
+    
+    public Month getMonth() { return month; }
+    public String getName() { return name; }
+    public int getDay() { return day; }
+    public int getHour() { return hour; }
+    public String getMinutes() { return minutes; }
+    public int getTotalMin() { return Integer.parseInt(minutes) + hour * 60; }
+    
+}
