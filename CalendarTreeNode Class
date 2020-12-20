@@ -1,0 +1,87 @@
+package distance.learning.assistant;
+
+
+public class CalendarTree<LocalDate> {
+    private class TreeNode<LocalDate> {
+        public TreeNode parent, left, right;
+        public LocalDate data;
+         
+        public TreeNode( TreeNode parent, TreeNode left, TreeNode right, LocalDate data ) {
+            this.parent = parent;
+            this.left = left;
+            this.right = right;
+            this.data = data;
+        }
+        
+        public LocalDate get() { return data; }
+        
+        public TreeNode left() { return left; }
+        
+        public TreeNode right() { return right; }
+        
+        public TreeNode parent() { return parent; }
+        
+        public void setDate( LocalDate data ) { this.data = data; }
+        
+        public void setLeft( TreeNode left ) { this.left = left; }
+        
+        public void setRight( TreeNode right ) { this.right = right; }
+        
+        public void setParent( TreeNode parent ) { this.parent = parent; }
+    }
+    
+    private TreeNode root;
+    
+    public CalendarTree() {
+        root = new TreeNode(null, null, null, null);
+    }
+    
+    public void add( LocalDate add ) {
+        TreeNode addNode = new TreeNode( null, null, null, add );
+        if( root.get() == null )
+            root.setDate(add);
+        else {
+            addNodeRec( root, addNode);
+        }
+    }
+    
+    private void addNodeRec( TreeNode parent, TreeNode n ) {
+        if( parent == null ) {
+            return;
+        } else if( parent.left() == null && parent.right() == null ) {
+            n.setParent(parent);
+            parent.setRight(n);
+        } else if( parent.left() == null && parent.right() != null ) {
+            n.setParent(parent);
+            parent.setLeft(n);
+        } else {
+            addNodeRec( parent.left(), n );
+        }
+    }
+    
+    public LocalDate top() {
+        return (LocalDate) root.get();
+    }
+    
+    public LocalDate remove() {
+        TreeNode remove = root;
+        if( root.left() == null && root.right() == null ) {
+            root.setDate(null);
+        } else if( root.right() != null ) {
+            root = root.right();
+            root.setParent(null);
+            if( remove.left() != null )
+                root.setLeft(remove.left());
+            remove.setLeft(null); remove.setRight(null);
+        } else if( root.left() != null && root.right() == null ) {
+            root = root.left();
+            root.setParent(null);
+            remove.setLeft(null); remove.setRight(null);
+        }
+        return (LocalDate)remove.get();
+    }
+    
+    public boolean isEmpty() {
+        return root.get() == null;
+    }
+}
