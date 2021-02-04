@@ -1,0 +1,49 @@
+package distance.learning.assistant;
+
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.Node;
+import javafx.scene.layout.Region;
+
+public class DaySlot {
+    private final LocalDate day;
+    private final Region calendarView;
+    private final BooleanProperty select = new SimpleBooleanProperty();
+    
+    public final BooleanProperty selectedProperty() {
+        return select;
+    }
+    
+    public final boolean isSelected() {
+        return selectedProperty().get();
+    }
+    
+    public final void setSelected( boolean select ) {
+        selectedProperty().set(select);
+    }
+    
+    public DaySlot( LocalDate day ) {
+        this.day = day;
+        
+        calendarView = new Region();
+        calendarView.setMinSize(150, 200);
+        
+    }
+    
+    public LocalDate getDay() {
+        return day;
+    }
+    
+    public DayOfWeek getDayOfWeek() {
+        return day.getDayOfWeek();
+    }
+    
+    public Node getView() {
+        return calendarView;
+    }
+}
